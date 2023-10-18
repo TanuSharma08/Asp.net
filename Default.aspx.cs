@@ -16,30 +16,15 @@ public partial class _Default : System.Web.UI.Page
     }
     protected void btnSearch_Click(object sender, EventArgs e)
     {
-        string cn = WebConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+        string productName = product_nm.Text;
+        string size = this.size.Text;
+        string price = this.price.Text;
+        string mfgdate = this.mfgdate.Text;
+        string category = this.category.Text;
+        string conjunction = this.conjunction.Value;
 
-
-        using (SqlConnection connection = new SqlConnection(cn))
-        {
-            SqlCommand command = new SqlCommand("Search", connection);
-            command.CommandType = CommandType.StoredProcedure;
-
-            command.Parameters.AddWithValue("@ProductName", product_nm);
-            command.Parameters.AddWithValue("@Size", size);
-            command.Parameters.AddWithValue("@Price", price);
-            command.Parameters.AddWithValue("@MfgDate", mfgdate ?? (object)DBNull.Value);
-            command.Parameters.AddWithValue("@Category", category);
-            command.Parameters.AddWithValue("@Conjunction", conjunction);
-
-            connection.Open();
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            //DataTable dataTable = new DataTable();
-            //adapter.Fill(dataTable);
-            GridView1.DataBind();
-
-        //GridView1.DataSource = ExecuteSearchProcedure(productName, size, price, mfgDate, category, conjunction);
-        }
-        
+        GridView1.DataSource = ExecuteSearchProcedure(productName, size, price, mfgdate, category, conjunction);
+        GridView1.DataBind();
     }
 
     protected void btnClear_Click(object sender, EventArgs e)
@@ -55,46 +40,19 @@ public partial class _Default : System.Web.UI.Page
         GridView1.DataBind();
     }
 
-    //private DataTable ExecuteSearchProcedure(string productName, string size, string price, DateTime? mfgDate, string category, string conjunction)
-    //{
-    //    string cn = WebConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
-
-
-    //    using (SqlConnection connection = new SqlConnection(cn))
-    //    {
-    //        SqlCommand command = new SqlCommand("Search", connection);
-    //        command.CommandType = CommandType.StoredProcedure;
-
-    //        command.Parameters.AddWithValue("@ProductName", productName);
-    //        command.Parameters.AddWithValue("@Size", size);
-    //        command.Parameters.AddWithValue("@Price", price);
-    //        command.Parameters.AddWithValue("@MfgDate", mfgDate ?? (object)DBNull.Value);
-    //        command.Parameters.AddWithValue("@Category", category);
-    //        command.Parameters.AddWithValue("@Conjunction", conjunction);
-
-    //        connection.Open();
-    //        SqlDataAdapter adapter = new SqlDataAdapter(command);
-    //        DataTable dataTable = new DataTable();
-    //        adapter.Fill(dataTable);
-
-    //        return dataTable;
-    //    }
-    //}
-
-    protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+    private DataTable ExecuteSearchProcedure(string productName, string size, string price, string mfgDate, string category, string conjunction)
     {
         string cn = WebConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
-
 
         using (SqlConnection connection = new SqlConnection(cn))
         {
             SqlCommand command = new SqlCommand("Search", connection);
             command.CommandType = CommandType.StoredProcedure;
 
-            command.Parameters.AddWithValue("@ProductName", product_nm);
+            command.Parameters.AddWithValue("@ProductName", productName);
             command.Parameters.AddWithValue("@Size", size);
             command.Parameters.AddWithValue("@Price", price);
-            command.Parameters.AddWithValue("@MfgDate", mfgdate ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@MfgDate", !string.IsNullOrEmpty(mfgDate) ? DateTime.Parse(mfgDate) : (DateTime?)null);
             command.Parameters.AddWithValue("@Category", category);
             command.Parameters.AddWithValue("@Conjunction", conjunction);
 
@@ -102,8 +60,8 @@ public partial class _Default : System.Web.UI.Page
             SqlDataAdapter adapter = new SqlDataAdapter(command);
             DataTable dataTable = new DataTable();
             adapter.Fill(dataTable);
-            GridView1.DataBind();
-            //return dataTable;
+
+            return dataTable;
         }
     }
 }
