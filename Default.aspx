@@ -4,37 +4,65 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Search Products</title>
 </head>
 <body>
     <form id="form1" runat="server">
         <div>
+            <asp:Table ID="Table1" runat="server">
+                <asp:TableRow>
+                    <asp:TableCell>
             <label for="product_nm">Product Name:</label>
-            <asp:TextBox ID="product_nm" runat="server" />
-            <br />
-
+                    </asp:TableCell>
+                    <asp:TableCell>
+                        <asp:TextBox ID="product_nm" runat="server" />
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableCell>
             <label for="size">Size:</label>
-            <asp:TextBox ID="size" runat="server" />
-            <br />
-
+                    </asp:TableCell>
+                    <asp:TableCell>
+                        <asp:TextBox ID="size" runat="server" />
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableCell>
             <label for="price">Price:</label>
-            <asp:TextBox ID="price" runat="server" />
-            <br />
-
+                    </asp:TableCell>
+                    <asp:TableCell>
+                        <asp:TextBox ID="price" runat="server" />
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableCell>
             <label for="mfgdate">Manufacture Date:</label>
-            <asp:TextBox ID="mfgdate" runat="server" />
-            <br />
-
+                    </asp:TableCell>
+                    <asp:TableCell>
+                        <asp:TextBox ID="mfgdate" runat="server" />
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableCell>
             <label for="category">Category:</label>
-            <asp:TextBox ID="category" runat="server" />
-            <br />
-
+                    </asp:TableCell>
+                    <asp:TableCell>
+                        <asp:TextBox ID="category" runat="server" />
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableCell>
             <label for="conjunction">Conjunction:</label>
-            <select id="conjunction" runat="server">
-                <option value="AND">AND</option>
-                <option value="OR">OR</option>
-            </select>
-            <br />
+                    </asp:TableCell>
+                    <asp:TableCell>
+                        <select id="conjunction" runat="server">
+                            <option value="AND">AND</option>
+                            <option value="OR">OR</option>
+                        </select>
+                    </asp:TableCell>
+                </asp:TableRow>
+            </asp:Table>
+
 
             <asp:Button ID="search" runat="server" Text="Search" OnClick="btnSearch_Click" />
             <asp:Button ID="clear" runat="server" Text="Clear" OnClick="btnClear_Click" />

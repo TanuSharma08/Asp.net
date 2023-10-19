@@ -52,7 +52,14 @@ public partial class _Default : System.Web.UI.Page
             command.Parameters.AddWithValue("@ProductName", productName);
             command.Parameters.AddWithValue("@Size", size);
             command.Parameters.AddWithValue("@Price", price);
-            command.Parameters.AddWithValue("@MfgDate", !string.IsNullOrEmpty(mfgDate) ? DateTime.Parse(mfgDate) : (DateTime?)null);
+            if (!string.IsNullOrEmpty(mfgDate))
+            {
+                command.Parameters.AddWithValue("@MfgDate", DateTime.Parse(mfgDate));
+            }
+            else
+            {
+                command.Parameters.AddWithValue("@MfgDate", DBNull.Value);
+            }
             command.Parameters.AddWithValue("@Category", category);
             command.Parameters.AddWithValue("@Conjunction", conjunction);
 
